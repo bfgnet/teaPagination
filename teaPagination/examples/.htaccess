@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^countries-of-the-world/([0-9]{1,4})\.html friendlyUrl.php?pag=$1 [L,QSA]
+</IfModule>

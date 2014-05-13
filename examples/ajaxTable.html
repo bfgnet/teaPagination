@@ -1,0 +1,284 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/highlight/default.css" rel="stylesheet" type="text/css" />
+        <script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/js/highlight.pack.js" type="text/javascript"></script>
+        <script src="../js/teaPaginate.js" type="text/javascript"></script>
+        <style>
+            .wrapper{
+                margin: 0 auto;
+                max-width: 800px;
+                padding-top: 50px;
+            }
+            a.order{
+                text-decoration: none;
+            }
+            .code{
+                display:none;
+            }
+        </style>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script type="text/javascript">
+            var paginateExample;
+            function search(text){
+                paginateExample.update({data:{page:1,search:text}}); 
+            }
+            function handlePagerExampleSuccess(data){
+                if(data){
+                    $("#example").html(data.list);
+                    $("#btns").html(data.buttons);
+                }else alert('error pagination');
+            }
+            $(document).ready(function(){
+                var element = document.getElementById('example');
+                paginateExample = new teaPaginate(element,{    
+                    url : 'ajaxTable.php',
+                    buttonsContainer : 'btns',
+                    OnLoad : handlePagerExampleSuccess,
+                    textLoading: '<tr><td colspan="4">Loading...</td></tr>',
+                    data:{page:1,init:true}
+                }).init();
+                $('a[href=#orderIso]').live('click', function() {
+                    $(this).closest('table').find('.fa').removeClass('fa-sort-asc').addClass('fa-sort');
+                    $(this).find('.fa').removeClass('fa-sort').addClass('fa-sort-asc');
+                    paginateExample.update({data:{page:paginateExample.currentPage(),order:'iso2'}});
+                });
+                $('a[href=#orderName]').live('click', function() {
+                    $(this).closest('table').find('.fa').removeClass('fa-sort-asc').addClass('fa-sort');
+                    $(this).find('.fa').removeClass('fa-sort').addClass('fa-sort-asc');
+                    paginateExample.update({data:{page:paginateExample.currentPage(),order:'short_name'}});
+                });
+                $('a[href=#orderCall]').live('click', function() {
+                    $(this).closest('table').find('.fa').removeClass('fa-sort-asc').addClass('fa-sort');
+                    $(this).find('.fa').removeClass('fa-sort').addClass('fa-sort-asc');
+                    paginateExample.update({data:{page:paginateExample.currentPage(),order:'calling_code'}});
+                });
+                $('.search').live('click', function() {
+                    var text = $('.textSearch').val(); 
+                    search(text);
+                });
+                $('.display').live('change', function() {
+                    var value = $(this).val();
+                    paginateExample.update({data:{page:paginateExample.currentPage(),display:value}}); 
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">teaPagination</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+                    <a href="../index.html" class="btn btn-default navbar-btn"><i class="fa fa-home"></i> Home</a>
+                </div>
+            </div>    
+        </nav>
+
+        <div class="wrapper">
+            <div class="alert alert-info"><strong>Please, </strong>Click <a href="javascript:void(0)" onClick="$('.code').toggle()" style="font-weight:bold">here</a> to view the code</div>
+            <div class="row">
+                <pre class="code html">
+<code>
+&lt;!--IN HTML FILE--&gt;  
+    &lt;div class="col-xs-4"&gt;
+        &lt;span&gt;Show &lt;/span&gt;
+        &lt;select class="form-control display" style="display:inline;max-width:100px"&gt;
+            &lt;option value="10" selected&gt;10&lt;/option&gt;
+            &lt;option value="20"&gt;20&lt;/option&gt;
+            &lt;option value="30"&gt;30&lt;/option&gt;
+            &lt;option value="40"&gt;40&lt;/option&gt;
+            &lt;option value="50"&gt;50&lt;/option&gt;
+        &lt;/select&gt;
+        &lt;span style="display:inline"&gt; entries&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="col-xs-8"&gt;
+        &lt;div class="input-group pull-right" style="width:300px;margin-bottom:20px"&gt;
+            &lt;input type="text" class="form-control textSearch" onkeydown="if(event.keyCode == 13)search($(this).val());"&gt;
+            &lt;span class="input-group-btn"&gt;
+                &lt;button class="btn btn-default search" type="button"&gt;Search&lt;/button&gt;
+            &lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;    
+&lt;table class="table table-bordered"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th style="width:15%"&gt;ISO&lt;a href="#orderIso" class="order"&gt;&lt;i class="fa fa-sort pull-right"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/th&gt;
+            &lt;th style="width:50%"&gt;Name&lt;a href="#orderName" class="order"&gt;&lt;i class="fa fa-sort-asc pull-right"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/th&gt;
+            &lt;th style="width:15%"&gt;Call Code&lt;a href="#orderCall" class="order"&gt;&lt;i class="fa fa-sort pull-right"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/th&gt;
+            &lt;th style="width:20%"&gt;Action&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody id="example"&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div id="btns"&gt;&lt;/div&gt;
+</code>
+                </pre>
+                <pre class="code js">
+<code>
+//IN JAVASCRIPT FILE
+var paginateExample;
+function search(text){
+    //Update list from server, send data to server
+    paginateExample.update({data:{page:1,search:text}}); 
+}
+function handlePagerExampleSuccess(data){
+    if(data){
+        //load list in element
+        $("#example").html(data.list);
+        //load buttons in element
+        $("#btns").html(data.buttons);
+    }else alert('error pagination');
+}
+$(document).ready(function(){
+    var element = document.getElementById('example');
+    //Create object
+    paginateExample = new teaPaginate(element,{    
+        url : 'ajaxTable.php',//url to send data server
+        buttonsContainer : 'btns',
+        OnLoad : handlePagerExampleSuccess,
+        textLoading: '&lt;tr>&lt;td colspan="4"&gt;Loading...&lt;/td&gt;&lt;/tr&gt;',
+        data:{page:1,init:true} //initialization data
+    }).init();
+    //Change the sort order of the list by iso
+    $('a[href=#orderIso]').live('click', function() {
+        $(this).closest('table').find('.fa').removeClass('fa-sort-asc').addClass('fa-sort');
+        $(this).find('.fa').removeClass('fa-sort').addClass('fa-sort-asc');
+        paginateExample.update({data:{page:paginateExample.currentPage(),order:'iso2'}});
+    });
+    //Change the sort order of the list by short name
+    $('a[href=#orderName]').live('click', function() {
+        $(this).closest('table').find('.fa').removeClass('fa-sort-asc').addClass('fa-sort');
+        $(this).find('.fa').removeClass('fa-sort').addClass('fa-sort-asc');
+        paginateExample.update({data:{page:paginateExample.currentPage(),order:'short_name'}});
+    });
+    //Change the sort order of the list by calling code
+    $('a[href=#orderCall]').live('click', function() {
+        $(this).closest('table').find('.fa').removeClass('fa-sort-asc').addClass('fa-sort');
+        $(this).find('.fa').removeClass('fa-sort').addClass('fa-sort-asc');
+        paginateExample.update({data:{page:paginateExample.currentPage(),order:'calling_code'}});
+    });
+    //call search function
+    $('.search').live('click', function() {
+        var text = $('.textSearch').val(); 
+        search(text);
+    });
+    //Change number rows of the list
+    $('.display').live('change', function() {
+        var value = $(this).val();
+        paginateExample.update({data:{page:paginateExample.currentPage(),display:value}}); 
+    });
+});
+</code>
+                </pre>
+                <pre class="code php html">
+<code>   
+//IN PHP FILE 
+//Open session for processing requests
+if (session_id() == '') {
+    session_start();
+}
+
+//If you started paging delete previous sessions
+if(isset($_POST['init'])){
+    unset($_SESSION['paginate']);
+}
+
+//obtained as to sort the list
+$order = (isset($_SESSION['paginate']['order']))? $_SESSION['paginate']['order'] : 'ORDER BY short_name ASC';
+if(isset($_POST['order'])){
+    $order = 'ORDER BY '.$_POST['order'].' ASC';
+    $_SESSION['paginate']['order'] = $order;
+}
+//get text search
+$search = (isset($_SESSION['paginate']['search']))? $_SESSION['paginate']['search'] : '';
+if(isset($_POST['search'])){
+    $search = 'WHERE short_name LIKE "%'.$_POST['search'].'%"';
+    $_SESSION['paginate']['search'] = $search;
+}
+//get number of rows
+$display = (isset($_SESSION['paginate']['display']))? $_SESSION['paginate']['display'] : 10;
+if(isset($_POST['display'])){
+    $display = $_POST['display'];
+    $_SESSION['paginate']['display'] = $display;
+}
+$sql = 'SELECT * FROM countries '.$search.$order;
+$options = array(
+    'beginLoop' =>; '&lt;tr&gt;',
+    'endLoop' =>; '&lt;/tr&gt;',
+    'maxButtons' => 5, 
+    'itemsPage' => (integer)$display, 
+    'ajax' => true,
+    'textNotFound' => '&lt;tr&gt;&lt;td colspan="4"&gt;Empty Record&lt;/td&gt;&lt;/tr&gt;',
+    'buttons' => array('class' => 'pagination pull-right','btLast' => false,'btFirst' => false),
+    'connect_db' => array('user' => 'root', 'database' => 'cakephp', 'password' => 'libertad2')
+);
+//Instance to the new class
+$pagination = new teaPagination($sql, $options);
+$pagination->loop('', 'create_row_data');
+//Send json data 'list' to list render and 'buttons', these keys should not be changed!!!
+echo json_encode(array(
+    'list' =&gt; $pagination-&gt;render(),
+    'buttons' =&gt; '&lt;div class="row"&gt;&lt;div class="col-md-6">Página '.$pagination->currentPage.' de '.$pagination->TotalPage.' de '.$pagination->TotalRecord.' Registros&lt;/div&gt;&lt;div class="col-md-6"&gt;'.$pagination-&gt;buttons().'&lt;/div&gt;&lt;/div&gt;'
+));
+
+//interaction function
+function create_row_data($data) {
+    $style = ($data['calling_code'] > 100)? ' style="background-color:#F2F2F2"' : '';
+    return '&lt;tr'.$style.'&gt;&lt;td&gt;'.$data['iso2'].'&lt;/td&gt;&lt;td&gt;'.$data['short_name'].'&lt;/td&gt;&lt;td&gt;'.$data['calling_code'].'&lt;/td&gt;&lt;td&gt;&lt;a href="#" onClick="alert(\'Delete '.$data['country_id'].'\')"&gt;delete&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;';
+}
+
+</code>
+                </pre>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <span>Show </span>
+                    <select class="form-control display" style="display:inline;max-width:100px">
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
+                    <span style="display:inline"> entries</span>
+                </div>
+                <!--div class="col-xs-1" style="text-align:left;padding-top:10px;padding-left:0px;">entries</div-->
+                <div class="col-xs-8">
+                    <div class="input-group pull-right" style="width:300px;margin-bottom:20px">
+                        <input type="text" class="form-control textSearch" onkeydown="if(event.keyCode == 13)search($(this).val());">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default search" type="button">Search</button>
+                        </span>
+                    </div>
+                </div>
+            </div>    
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width:15%">ISO<a href="#orderIso" class="order"><i class="fa fa-sort pull-right"></i></a></th>
+                        <th style="width:50%">Name<a href="#orderName" class="order"><i class="fa fa-sort-asc pull-right"></i></a></th>
+                        <th style="width:15%">Call Code<a href="#orderCall" class="order"><i class="fa fa-sort pull-right"></i></a></th>
+                        <th style="width:20%">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="example">
+                </tbody>
+            </table>
+            <div id="btns"></div>
+        </div>
+    </body>
+</html>

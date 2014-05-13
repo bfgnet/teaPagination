@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>Template Documentation Template</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<style type="text/css" media="screen">
+		p, table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+	</style>
+</head>
+
+
+<body>
+	<div class="container">
+	
+		<h3 class="center alt">&ldquo;teaPagination&rdquo; Documentation by &ldquo;Basilio Fajardo Gálvez&rdquo; v1.0</h3>
+		
+		<hr>
+		
+		<h1 class="center">&ldquo;teaPagination&rdquo;</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 11/01/2013<br>
+					By: Basilio Fajardo Gálvez<br>
+					Email: <a href="mailto:bfgnet@yahoo.es">bfgnet@yahoo.es</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing teaPagination. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/bfgnet">here</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+			<li><a href="#description">Description</a></li>
+			<li><a href="#features">Features</a></li>
+			<li><a href="#installation">Installation</a></li>
+			<li><a href="#use">How To Use</a></li>
+			<li><a href="#javascript">JavaScript</a></li>
+			<li><a href="#credits">Sources and Credits</a></li>
+		</ol>
+		
+		<hr>
+		
+		<h3 id="description"><strong>A) Description</strong> - <a href="#toc">top</a></h3>
+		<p>teaPagination is a script that allows you to paginate a sql statement or an array of data, is powerful and flexible as it has all the functionality to page any data you want.</p>
+                <p><img src="assets/images/datatable.png" alt="DataTable Example" /></p>
+                <p><img src="assets/images/listdata.png" alt="Customize Example" /></p>
+		<hr>
+
+		<h3 id="installation"><strong>C) Installation</strong> - <a href="#toc">top</a></h3>
+                <ol>
+                    <li>Unzip the file on the server root</li>
+                    <li>Included in their projects teaPagination.php file. <pre>&lt;?php require('your/path/teaPagination.php'); ?></pre></li>
+					<li>Open in folder examples setting/setting.php and write your data connection to the database</li>
+					<li>Execute countries.sql in your database.</li>
+                    <li>If you use the ajax page should include jquery plugin that is disposed within the header labels html document. <pre>&lt;script src="your/path/teaPaginate.js" type="text/javascript">&lt;/script></pre></li>
+                </ol>
+                
+                <hr>
+                                
+                <h3 id="features"><strong>C) Features</strong> - <a href="#toc">top</a></h3>
+                <ol>
+                    <li>Easy to use, with a few lines of code get great results</li>
+                    <li>Url and Ajax Pagination</li>
+                    <li>Allows friendly url</li>
+                    <li>The list is customizable</li>
+                    <li>It is very extensible</li>
+                    <li>has added a jquery plugin to interact with the server in the most simple</li>
+                </ol>
+
+		<hr>
+		
+		<h3 id="use"><strong>D) How to use</strong> - <a href="#toc">top</a></h3>
+		
+		<p>Before initializing the object must have prepared the data, which can be an array or sql query already formed.</p>
+                <pre>$data = 'Select * from countries'; /*or*/ $data = array('a','b','c','d');</pre>
+                <p>Set options for pagination</p>
+                <pre>$options = array();</pre>
+                <table><thead><th style="width:20%">Option</th><th style="width:50%">Description</th><th>Default Value</th></thead>
+                <tbody>
+                    <tr><td><b>maxButtons (integer)</b></td><td>Sets the number of buttons to display</td><td>5</td></tr>
+                    <tr><td><b>itemsPage (integer)</b></td><td>Number of rows to display</td><td>5</td></tr>
+                    <tr><td><b>beginLoop (string)</b></td><td>Sets string to the begin of the loop</td><td>NONE</td></tr>
+                    <tr><td><b>endLoop (string)</b></td><td>Sets string to the end of the loop</td><td>NONE</td></tr>
+                    <tr><td><b>beginTagItem (string)</b></td><td>Sets a string at the beginning of the iteration</td><td>NONE</td></tr>
+                    <tr><td><b>endTagItem (string)</b></td><td>Sets a string at the end of the iteration</td><td>NONE</td></tr>
+                    <tr><td><b>ajax (boolean)</b></td><td>It does not show the button link page</td><td>false</td></tr>
+                    <tr><td><b>nameVar (string)</b></td><td>Parameter name containing the page number</td><td>page</td></tr>
+                    <tr><td><b>urlPage (string)</b></td><td>Allows you to customize the output url</td><td>NONE</td></tr>
+                    <tr><td><b>textNotFound (string)</b></td><td>Text to be displayed when the data list is empty</td><td>Not found Record.</td></tr>
+                    <tr><td><b>connect_db (array)</b></td><td>This option sets the connection parameters to the database:<ol><li>user: name user</li><li>database: name database</li><li>password</li></ol></td><td>array('user' => '','database' => '','password' => '')</td></tr>
+                    <tr><td><b>buttons (array)</b></td><td>Customize output buttons:
+                            <ol>
+                                <li>btNext(boolean): Display the next button</li>
+                                <li>btNextTitle(string): Set button text</li>
+                                <li>btPrevious(boolean): Display the previous button</li>
+                                <li>btPreviousTitle(string): Set button text</li>
+                                <li>btFirst (boolean): Display first button</li>
+                                <li>btFirstTitle(string): Set button text</li>
+                                <li>btLast(boolean): Display last button</li>
+                                <li>btLastTitle(string): Set button text</li>
+                                <li>class(string): Define button styles</li>
+                            </ol></td><td>array('btNext' => true,'btNextTitle' => 'Next &raquo;','btPreviousTitle' => '&laquo; Previous','btPrevious' => true,'btLastTitle' => 'Last','btLast' => true,'btFirstTitle' => 'First','btFirst' => true,'class' => '')</td></tr>
+                </tbody>
+                </table>
+                <p>Create an instance of the class</p>
+                <pre>$pagination = new teaPagination($data, $options);</pre>
+                <p>Create the list using the loop method</p>
+                <pre>$pagination->loop($item_design, $callback=null, $callArgs=array());</pre>
+                <p><b>$item_design</b> is a string that replaces a word key by the value obtained from the data source. For example, if you have a field named 'lastName' that it replaced by its value chain adding the word {lastName}.
+                    <b>$callback</b> is a name function for display a more complete list, so calling an external function that will be called for each iteration of data. For example, to obtain a list of active users from the data source:
+                </p>
+                <pre>function create_list($data){if($data['user'] == 'active')return '&lt;div>'.$data['name'].'&lt;/div>';}</pre>
+                <p>And finally display the list and buttons</p>
+                <pre>echo $pagination->render(); /* list */ echo $pagination->buttons(); /* buttons */</pre>
+                <h3>Public variables:</h3>
+                <ul>
+                    <li><b>currentPage</b>: returns the current page number</li>
+                    <li><b>TotalPage</b>: returns total pages of the list</li>
+                    <li><b>TotalRecord</b>: returns total records of the list</li>
+                </ul>
+		<hr>
+		
+		<h3 id="javascript"><strong>D) JavaScript</strong> - <a href="#toc">top</a></h3>
+		
+		<p>For ajax paging to use the plugin for jquery teaPaginate.js, add the following line of code between the head tags in html document:</p>
+                <pre>&lt;script src="your/path/teaPaginate.js" type="text/javascript">&lt;/script></pre>
+                <p>Now create the object for manipulation</p>
+                <pre>
+var element = document.getElementById('example');
+var paginateExample = new teaPaginate(element,{    
+    url : server.php,
+    buttonsContainer : 'nameElement',
+    OnLoad : handlePagerSuccess,
+    OnBefore: handlePagerBefore,
+    textLoading: 'Loading...',
+    data:{page:1,init:true}
+}).init();
+</pre>
+                <h3>Options:</h3>
+                <ul>
+                    <li><b>url</b>: url server</li>
+                    <li><b>buttonsContainer</b>: element that contains the buttons</li>
+                    <li><b>OnLoad</b>: processed function call after loading the list</li>
+                    <li><b>OnBefore</b>: processed function call before loading the list</li>
+                    <li><b>textLoading</b>: alternative text during the loading process</li>
+                    <li><b>data</b>: data sent to the server for processing (POST request)</li>
+                </ul>
+                <h3>Methods:</h3>
+                <ul>
+                    <li><b>update({data{options}})</b>: update the current page number (making a call to the server), data is sent (POST) to the server for processing.</li>
+                    <li><b>currentPage()</b>: return current page</li>
+                </ul>
+		
+		<hr>
+		
+		<h3 id="credits"><strong>E) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+		
+		<p><a href="jquery.com">JQuery</a> has been used as external library and <a href="http://www.firephp.org/">FirePHP</a>.
+		
+		<hr>
+		
+		<p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes on ThemeForest, you might consider visiting the forums and asking your question in the "Item Discussion" section.</p> 
+		
+		<p class="append-bottom alt large"><strong>Basilio Fajardo Gálvez</strong></p>
+	
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>

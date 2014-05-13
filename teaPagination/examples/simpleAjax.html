@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/highlight/default.css" rel="stylesheet" type="text/css" />
+        <script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/js/highlight.pack.js" type="text/javascript"></script>
+        <script src="../js/teaPaginate.js" type="text/javascript"></script>
+        <style>
+            .wrapper{
+                margin: 0 auto;
+                max-width: 800px;
+                padding-top: 50px;
+            }
+            .code{
+                display:none;
+            }
+        </style>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script type="text/javascript">
+            var paginateExample;
+            function handlePagerExampleSuccess(data){
+                if(data){
+                    $("#example").fadeOut('fast',function(){
+                        $(this).html(data.list);
+                    }).fadeIn("fast");
+                    $('#btns').html(data.buttons);
+                    NumPage = paginateExample.currentPage();
+                    //alert(NumPage);
+                }else alert('error pagination');
+            }
+            function handlePagerExampleBefore(){
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 0);
+            }
+            $(document).ready(function(){
+                var element = document.getElementById('example');
+                paginateExample = new teaPaginate(element,{    
+                    url : 'simpleAjax.php',
+                    buttonsContainer : 'btns',
+                    OnLoad : handlePagerExampleSuccess,
+                    OnBefore: handlePagerExampleBefore,
+                    textLoading: 'Loading...'
+                 }).init();
+            });
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">teaPagination</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+                    <a href="../index.html" class="btn btn-default navbar-btn"><i class="fa fa-home"></i> Home</a>
+                </div>
+            </div>    
+        </nav>
+
+        <div class="wrapper">
+            <div class="alert alert-info"><strong>Please, </strong>Click <a href="javascript:void(0)" onClick="$('.code').toggle()" style="font-weight:bold">here</a> to view the code</div>
+            <div class="row">
+                <pre class="code html">
+<code>
+&lt;!--IN HTML FILE--&gt;  
+&lt;div id="example"&gt;&lt;/div&gt;
+&lt;div id="btns"&gt;&lt;/div&gt;
+</code>
+                </pre>
+                <pre class="code js">
+<code>
+//IN JAVASCRIPT FILE
+var paginateExample;
+function handlePagerExampleSuccess(data){
+    //After load data
+    if(data){
+        $("#example").fadeOut('fast',function(){
+            //load list in element
+            $(this).html(data.list);
+        }).fadeIn("fast");
+        //load buttons in element
+        $('#btns').html(data.buttons);
+        //get number page
+        NumPage = paginateExample.currentPage();
+        //alert(NumPage);
+    }else alert('error pagination');
+}
+function handlePagerExampleBefore(){
+    //Before load data
+    $('html, body').animate({
+        scrollTop: 0
+    }, 0);
+}
+$(document).ready(function(){
+    var element = document.getElementById('example');
+    //Create object
+    paginateExample = new teaPaginate(element,{    
+        url : 'simpleAjax.php', //url to send data server
+        buttonsContainer : 'btns',
+        OnLoad : handlePagerExampleSuccess,
+        OnBefore: handlePagerExampleBefore,
+        textLoading: 'Loading...'
+     }).init();
+});
+</code>
+                </pre>
+                <pre class="code php html">
+<code>   
+//IN PHP FILE    
+$sql = 'SELECT * FROM countries';
+//added the class options
+$options = array(
+    'beginLoop' => '&lt;blockquote&gt;',
+    'endLoop' => '&lt;/blockquote&gt;',
+    'maxButtons' => 5,
+    'itemsPage' => 10,
+    'ajax' => true,
+    'buttons' => array('class' => 'pagination'),
+    'connect_db' => array('user' => 'root', 'database' => 'example', 'password' => 'passw')
+);
+//Instance is started
+$pagination = new teaPagination($sql, $options);
+//Add in the method a function of interaction (create_list_data)
+$pagination->loop('', 'create_list_data');
+//Send json data 'list' to list render and 'buttons', these keys should not be changed!!!
+echo json_encode(array('list' => $pagination->render(),'buttons' => $pagination->buttons()));
+
+//interaction function
+function create_list_data($data) {
+    return '&lt;p&gt;&lt;a href="javascript:void(0)" onClick="alert(\'Country: ' . $data['short_name'] . '\')"&gt;' . $data['short_name'] . '&lt;/a&gt;&lt;/p&gt;&lt;small&gt;' . $data['long_name'] . '&lt;/small&gt;';
+}
+</code>
+                </pre>
+            </div>
+            <div id="example"></div>
+            <div id="btns"></div>
+        </div>
+    </body>
+</html>

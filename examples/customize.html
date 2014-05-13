@@ -1,0 +1,373 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/highlight/default.css" rel="stylesheet" type="text/css" />
+        <script src="assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="assets/js/highlight.pack.js" type="text/javascript"></script>
+        <script src="../js/teaPaginate.js" type="text/javascript"></script>
+        <style>
+            .wrapper{
+                margin: 0 auto;
+                max-width: 800px;
+                padding-top: 50px;
+            }
+            a.order{
+                text-decoration: none;
+            }
+            span.vertical-line{
+                width: 0px; /* Use only border style */
+                height: auto;
+                border: 1px inset; /* This is default border style for <hr> tag */
+                margin-left: 10px;
+                margin-right: 10px;
+            }         
+            .row-fluid{
+                width:100%;
+                display:block;
+            }
+            .code{
+                display:none;
+            }
+        </style>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script type="text/javascript">
+            var paginateExample;
+            function search(text){
+                paginateExample.update({data:{page:1,search:text}}); 
+            }
+            function handlePagerExampleSuccess(data){
+                if(data){
+                    $("#example").fadeOut('fast',function(){
+                        $(this).html(data.list);
+                    }).fadeIn("fast");
+                    $('.btns').html(data.buttons);
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 0);                    
+                }else alert('error pagination');
+            }
+            function handlePagerExampleBefore(){
+                
+            }
+            $(document).ready(function(){
+                var element = document.getElementById('example');
+                paginateExample = new teaPaginate(element,{    
+                    url : 'customize.php',
+                    buttonsContainer : 'btns',
+                    OnLoad : handlePagerExampleSuccess,
+                    OnBefore: handlePagerExampleBefore,
+                    textLoading: 'Loading...',
+                    data:{page:1,init:true}
+                }).init();
+                $('a[href=#list]').live('click', function() {
+                    $('.btn').removeClass('active');
+                    $(this).addClass('active');
+                    paginateExample.update({data:{page:paginateExample.currentPage(),type:'list'}});
+                });
+                $('a[href=#grid]').live('click', function() {
+                    $('.btn').removeClass('active');
+                    $(this).addClass('active');
+                    paginateExample.update({data:{page:paginateExample.currentPage(),type:'grid'}});
+                });
+                $('a[href=#order]').live('click', function() {
+                    var orderType;
+                    if($(this).find('i').hasClass('fa-arrow-up')){
+                        $(this).find('i').removeClass('fa-arrow-up').addClass('fa-arrow-down');
+                        orderType = 'DESC';
+                    }else{
+                        $(this).find('i').removeClass('fa-arrow-down').addClass('fa-arrow-up');
+                        orderType = 'ASC';
+                    }    
+                    paginateExample.update({data:{page:paginateExample.currentPage(),order:orderType}});
+                });
+                $('.sort').live('change', function() {
+                    var value = $(this).val();
+                    paginateExample.update({data:{page:paginateExample.currentPage(),sort:value}}); 
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">teaPagination</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+                    <a href="../index.html" class="btn btn-default navbar-btn"><i class="fa fa-home"></i> Home</a>
+                </div>
+            </div>    
+        </nav>
+        <div class="wrapper">
+            <div class="alert alert-info"><strong>Please, </strong>Click <a href="javascript:void(0)" onClick="$('.code').toggle()" style="font-weight:bold">here</a> to view the code</div>
+            <div class="row">
+                <pre class="code html">
+<code>
+&lt;!--IN HTML FILE--&gt;  
+&lt;div class="row"&gt;
+    &lt;div class="col-xs-6" style="padding-top:20px"&gt;
+        &lt;span&gt;Sort by: &lt;/span&gt;
+        &lt;select class="form-control sort" style="display:inline;max-width:150px;margin-right:10px"&gt;
+            &lt;option value="short_name" selected&gt;Short Name&lt;/option&gt;
+            &lt;option value="long_name"&gt;Long Name&lt;/option&gt;
+            &lt;option value="iso2"&gt;Country Code&lt;/option&gt;
+        &lt;/select&gt;
+        &lt;a href="#order"&gt;&lt;i class="fa fa-arrow-up"&gt;&lt;/i&gt;&lt;/a&gt;&lt;span class="vertical-line"&gt;&lt;/span&gt;
+        &lt;div class="btn-group"&gt;
+            &lt;a class="btn btn-default active" href="#list"&gt;&lt;i class="fa fa-list"&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a class="btn btn-default" href="#grid"&gt;&lt;i class="fa fa-th"&gt;&lt;/i&gt;&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-xs-6"&gt;
+        &lt;div class="btns pull-right"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;    
+
+&lt;div id="example"&gt;&lt;/div&gt;
+&lt;div class="btns pull-right row"&gt;&lt;/div&gt;
+</code>
+                </pre>
+                <pre class="code js">
+<code>
+//IN JAVASCRIPT FILE
+var paginateExample;
+function search(text){
+    //Update list from server, send data to server
+    paginateExample.update({data:{page:1,search:text}}); 
+}
+function handlePagerExampleSuccess(data){
+    if(data){
+        $("#example").fadeOut('fast',function(){
+            //load list in element
+            $(this).html(data.list);
+        }).fadeIn("fast");
+        //load buttons in element
+        $('.btns').html(data.buttons);
+        //top of the page
+        $('html, body').animate({
+            scrollTop: 0
+        }, 0);                    
+    }else alert('error pagination');
+}
+function handlePagerExampleBefore(){
+    //Before load function
+}
+$(document).ready(function(){
+    var element = document.getElementById('example');
+    //Create object
+    paginateExample = new teaPaginate(element,{    
+        url : 'customize.php', //url to send data server
+        buttonsContainer : 'btns',
+        OnLoad : handlePagerExampleSuccess,
+        OnBefore: handlePagerExampleBefore,
+        textLoading: 'Loading...',
+        data:{page:1,init:true}//Send initialize data to server
+    }).init();
+    //Change a list view
+    $('a[href=#list]').live('click', function() {
+        $('.btn').removeClass('active');
+        $(this).addClass('active');
+        paginateExample.update({data:{page:paginateExample.currentPage(),type:'list'}});
+    });
+    //Change a grid view
+    $('a[href=#grid]').live('click', function() {
+        $('.btn').removeClass('active');
+        $(this).addClass('active');
+        paginateExample.update({data:{page:paginateExample.currentPage(),type:'grid'}});
+    });
+    //Change the sort order of the list
+    $('a[href=#order]').live('click', function() {
+        var orderType;
+        if($(this).find('i').hasClass('fa-arrow-up')){
+            $(this).find('i').removeClass('fa-arrow-up').addClass('fa-arrow-down');
+            orderType = 'DESC';
+        }else{
+            $(this).find('i').removeClass('fa-arrow-down').addClass('fa-arrow-up');
+            orderType = 'ASC';
+        }    
+        paginateExample.update({data:{page:paginateExample.currentPage(),order:orderType}});
+    });
+    //Change the order of the list
+    $('.sort').live('change', function() {
+        var value = $(this).val();
+        paginateExample.update({data:{page:paginateExample.currentPage(),sort:value}}); 
+    });
+});
+</code>
+                </pre>
+                <pre class="code php html">
+<code>   
+//Custom Class 
+/**
+* this class extends teaPagination 
+* @see teaPagination
+*/
+class PaginateCustomize extends teaPagination{
+    
+    public $sql; //sql sentence
+    public $defaultOptions = array(
+        'beginLoop' => '&lt;div class="row"&gt;',
+        'endLoop' => '&lt;/div&gt;',
+        'maxButtons' => 5,
+        'itemsPage' => 9,
+        'ajax' => true,
+        'buttons' => array('class' => 'pagination','btFirst' => false,'btLast' => false),
+        'connect_db' => array('user' => 'root', 'database' => 'cakephp', 'password' => 'libertad2')
+    );
+    private $extendsOptions = array(
+        'sort' => 'short_name',
+        'order' => 'ASC',
+        'typeList' => 'list',
+        'search' => null,
+        'fieldsSearch' => array()
+    );
+    
+    /**
+    * The class constructor
+    */
+    function __construct($sql, $options, $type) {
+        //Open session for processing requests
+        if (session_id() == '') {
+            session_start();
+        }
+        //If you started paging delete previous sessions
+        if($_POST['init'])unset($_SESSION['paginate']);
+        //Added extended options
+        foreach($options as $key => $value){
+            if(array_key_exists($key, $this->extendsOptions)){
+                if(!is_null($value))$_SESSION['paginate'][$key] = $value; 
+            }    
+        }
+        //Instantiate the parent class
+        parent::__construct($this->createSelect($_SESSION, $sql), $this->defaultOptions);
+        //check type list and create the list
+        $type = (isset($_SESSION['paginate']['typeList'])) ? $_SESSION['paginate']['typeList'] : $this->extendsOptions['typeList'];
+        if($type == 'list')$this->loop('', array($this,'create_list_data'));
+        elseif($type == 'grid') $this->loop('', array($this,'create_grid_data'));
+        else $this->loop('', array($this,'create_list_data'));
+    }
+    
+    /**
+    * This function return sql
+    *
+    * @param mixed session data
+    * @param string sql query
+    * @return final sql
+    */
+     private function createSelect($session, $sql){
+        $sort = (isset($session['paginate']['sort'])) ? ' ORDER BY '.$session['paginate']['sort'] : ' ORDER BY '.$this->extendsOptions['sort'];
+        $order = (isset($session['paginate']['order'])) ? $session['paginate']['order'] : $this->extendsOptions['order'];
+        if(isset($session['paginate']['search'])){
+          if(!empty($session['paginate']['fieldsSearch'])){
+              $search = ' ';
+              foreach($session['paginate']['fieldsSearch'] as $value){
+                  if(end($session['paginate']['fieldsSearch']) === $value)
+                      $search .= $value.' LIKE "%'.$session['paginate']['search'].'%"';
+                  else
+                      $search .= $value.' LIKE "%'.$session['paginate']['search'].'%" OR ';
+              }
+          }else $search = '';   
+        }else $search = '';
+        $sql .= $search.$sort.' '.$order;
+        return $sql;
+    }
+    
+    /**
+    * This function print each iteration
+    *
+    * @param mixed data associated with the sql query
+    * @return each iteration in the list
+    */
+    protected function create_list_data($data) {
+        return '&lt;pre&gt;&lt;a href="javascript:void(0)" onClick="alert(\'Country: ' . $data['short_name'] . '\')"&gt;' . $data['short_name'] . '&lt;/a&gt; - Country code: '.$data['iso2'].'&lt;br/&gt; &lt;small&gt;' . $data['long_name'] . '&lt;/small&gt;&lt;/pre&gt;';
+    }
+
+    /**
+    * This function print each iteration
+    *
+    * @param mixed data associated with the sql query
+    * @return each iteration in the grid
+    */
+    protected function create_grid_data($data) {
+        return '&lt;div class="col-xs-4"&gt;&lt;div class="well" style="min-height:120px;"&gt;&lt;a href="javascript:void(0)" onClick="alert(\'Country: ' . $data['short_name'] . '\')"&gt;' . $data['short_name'] . '&lt;/a&gt; - Country code: '.$data['iso2'].'&lt;br/&gt; &lt;small&gt;' . $data['long_name'] . '&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;';
+    }
+
+    /**
+    * This function show total list
+    *
+    * @return list
+    */
+    function ShowList(){
+        return $this->render();
+    }
+    
+    /**
+    * This function show buttons
+    *
+    * @return buttons
+    */
+    function ShowButtons(){
+        return $this->buttons();
+    }
+}
+    
+</code>
+                </pre>                
+                <pre class="code php html">
+<code>   
+//IN FILE PHP 
+//get request actions
+$sort = (isset($_POST['sort'])) ? $_POST['sort'] : null;
+$order = (isset($_POST['order'])) ? $_POST['order'] : null;
+$type = (isset($_POST['type'])) ? $_POST['type'] : null;
+$search = (isset($_POST['search'])) ? $_POST['search'] : null;
+//added new options to the class extends
+$options = array(
+    'sort' => $sort,
+    'order' => $order,
+    'typeList' => $type,
+    'search' => $search,
+    'fieldsSearch' => array('short_name','long_name')
+);
+//Instance to the new class
+$pagination = new PaginateCustomize('SELECT * FROM countries',$options,$type);
+//Send json data 'list' to list render and 'buttons', these keys should not be changed!!!
+echo json_encode(array('list' => $pagination->ShowList(),'buttons' => $pagination->buttons()));
+</code>
+                </pre>
+            </div>
+            <div class="row">
+                <!--div class="col-xs-1" style="text-align:left;padding-top:10px;padding-left:10px;">Show</div-->
+                <div class="col-xs-6" style="padding-top:20px">
+                    <span>Sort by: </span>
+                    <select class="form-control sort" style="display:inline;max-width:150px;margin-right:10px">
+                        <option value="short_name" selected>Short Name</option>
+                        <option value="long_name">Long Name</option>
+                        <option value="iso2">Country Code</option>
+                    </select>
+                    <a href="#order"><i class="fa fa-arrow-up"></i></a><span class="vertical-line"></span>
+                    <div class="btn-group">
+                        <a class="btn btn-default active" href="#list"><i class="fa fa-list"></i></a>
+                        <a class="btn btn-default" href="#grid"><i class="fa fa-th"></i></a>
+                    </div>
+                </div>
+                <!--div class="col-xs-1" style="text-align:left;padding-top:10px;padding-left:0px;">entries</div-->
+                <div class="col-xs-6">
+                    <div class="btns pull-right"></div>
+                </div>
+            </div>    
+
+            <div id="example"></div>
+            <div class="btns pull-right row"></div>
+        </div>
+    </body>
+</html>
