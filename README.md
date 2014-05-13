@@ -100,18 +100,19 @@ var paginateExample = new teaPaginate(element,{
     data:{page:1,init:true}
 }).init();
 </pre>
-                <h3>Options:</h3>
-                <ul>
-                    <li><b>url</b>: url server</li>
-                    <li><b>buttonsContainer</b>: element that contains the buttons</li>
-                    <li><b>OnLoad</b>: processed function call after loading the list</li>
-                    <li><b>OnBefore</b>: processed function call before loading the list</li>
-                    <li><b>textLoading</b>: alternative text during the loading process</li>
-                    <li><b>data</b>: data sent to the server for processing (POST request)</li>
-                </ul>
-                <h3>Methods:</h3>
-                <ul>
-                    <li><b>update({data{options}})</b>: update the current page number (making a call to the server), data is sent (POST) to the server for processing.</li>
-                    <li><b>currentPage()</b>: return current page</li>
-                </ul>
+<br/>
+<h3>Options:</h3>
+<ul>
+    <li><b>url</b>: url server</li>
+    <li><b>buttonsContainer</b>: element that contains the buttons</li>
+    <li><b>OnLoad</b>: processed function call after loading the list</li>
+    <li><b>OnBefore</b>: processed function call before loading the list</li>
+    <li><b>textLoading</b>: alternative text during the loading process</li>
+    <li><b>data</b>: data sent to the server for processing (POST request)</li>
+</ul>
+<h3>Methods:</h3>
+<ul>
+    <li><b>update({data{options}})</b>: update the current page number (making a call to the server), data is sent (POST) to the server for processing.</li>
+    <li><b>currentPage()</b>: return current page</li>
+</ul>
 		
