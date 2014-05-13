@@ -41,20 +41,20 @@ How to use
 <pre>$data = 'Select * from countries'; /*or*/ $data = array('a','b','c','d');</pre>
 <p>Set options for pagination</p>
 <pre>$options = array();</pre>
-<table><tr><td style="width:20%">**Option**</td><td style="width:50%">**Description**</td><td>**Default Value**</td></tr>
+<table><tr><td style="width:20%">Option</td><td style="width:50%">Description</td><td>Default Value</td></tr>
 <tbody>
-    <tr><td>*maxButtons (integer)*</td><td>Sets the number of buttons to display</td><td>5</td></tr>
-    <tr><td>*itemsPage (integer)*</td><td>Number of rows to display</td><td>5</td></tr>
-    <tr><td>*beginLoop (string)*</td><td>Sets string to the begin of the loop</td><td>NONE</td></tr>
-    <tr><td>*endLoop (string)*</td><td>Sets string to the end of the loop</td><td>NONE</td></tr>
-    <tr><td>*beginTagItem (string)*</td><td>Sets a string at the beginning of the iteration</td><td>NONE</td></tr>
-    <tr><td>*endTagItem (string)*</td><td>Sets a string at the end of the iteration</td><td>NONE</td></tr>
-    <tr><td>*ajax (boolean)*</td><td>It does not show the button link page</td><td>false</td></tr>
-    <tr><td>*nameVar (string)*</td><td>Parameter name containing the page number</td><td>page</td></tr>
-    <tr><td>*urlPage (string)*</td><td>Allows you to customize the output url</td><td>NONE</td></tr>
-    <tr><td>*textNotFound (string)*</td><td>Text to be displayed when the data list is empty</td><td>Not found Record.</td></tr>
-    <tr><td>*connect_db (array)*</td><td>This option sets the connection parameters to the database:<ol><li>user: name user</li><li>database: name database</li><li>password</li></ol></td><td>array('user' =&gt; '','database' =&gt; '','password' =&gt; '')</td></tr>
-    <tr><td>*buttons (array)*</td><td>Customize output buttons:
+    <tr><td>maxButtons (integer)</td><td>Sets the number of buttons to display</td><td>5</td></tr>
+    <tr><td>itemsPage (integer)</td><td>Number of rows to display</td><td>5</td></tr>
+    <tr><td>beginLoop (string)</td><td>Sets string to the begin of the loop</td><td>NONE</td></tr>
+    <tr><td>endLoop (string)</td><td>Sets string to the end of the loop</td><td>NONE</td></tr>
+    <tr><td>beginTagItem (string)</td><td>Sets a string at the beginning of the iteration</td><td>NONE</td></tr>
+    <tr><td>endTagItem (string)</td><td>Sets a string at the end of the iteration</td><td>NONE</td></tr>
+    <tr><td>ajax (boolean)</td><td>It does not show the button link page</td><td>false</td></tr>
+    <tr><td>nameVar (string)</td><td>Parameter name containing the page number</td><td>page</td></tr>
+    <tr><td>urlPage (string)</td><td>Allows you to customize the output url</td><td>NONE</td></tr>
+    <tr><td>textNotFound (string)</td><td>Text to be displayed when the data list is empty</td><td>Not found Record.</td></tr>
+    <tr><td>connect_db (array)</td><td>This option sets the connection parameters to the database:<ol><li>user: name user</li><li>database: name database</li><li>password</li></ol></td><td>array('user' =&gt; '','database' =&gt; '','password' =&gt; '')</td></tr>
+    <tr><td>buttons (array)</td><td>Customize output buttons:
             <ol>
                 <li>btNext(boolean): Display the next button</li>
                 <li>btNextTitle(string): Set button text</li>
