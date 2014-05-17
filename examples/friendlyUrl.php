@@ -2,7 +2,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/css/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="../assets/css/highlight/default.css" rel="stylesheet" type="text/css" />
         <script src="../assets/js/jquery-1.7.2.min.js" type="text/javascript"></script>
         <script src="../assets/js/bootstrap.min.js" type="text/javascript"></script>
